@@ -1,6 +1,8 @@
 
 const express = require('express');
 const router = express.Router();
+const gravatar = require('gravatar');
+const bcrypt = require('bcryptjs');
 const admin = require('firebase-admin');
 admin.initializeApp();
 
@@ -32,56 +34,33 @@ router.post('/register', async (req, res) => {
         console.log('Error getting messages', error.message);
         return res.sendStatus(500);
       }    
+      const avatar = gravatar.url(req.body.email, {
+        s: '200', // Size
+        r: 'pg', // Rating
+        d: 'mm' // Default
+      });
       
       const newUser = {
         name: req.body.name,
         email: req.body.email,
-        //avatar,
+        avatar: avatar,
         password: req.body.password,
         date: admin.database.ServerValue.TIMESTAMP
       };
       
-      const snapshot = await admin.database().ref(`/users`).push(newUser);
-      res.json("New user created.");
+      // bcrypt is an async function here
+      bcrypt.genSalt(10, (err, salt) => {
+        if (err) throw err;
+        bcrypt.hash(newUser.password, salt, async (err, hash) => {
+          if (err) throw err;
+          newUser.password = hash;
+          const snapshot = await admin.database().ref(`/users`).push(newUser);
+          res.json("New user created.");
+          
+        });
+      });
 });      
  
-//   User.findOne({ email: req.body.email }).then(user => {
-//     if (user) {
-//       errors.email = 'Email already exists';
-//       return res.status(400).json(errors);
-//     } else {
-//       // const avatar = gravatar.url(req.body.email, {
-//       //   s: '200', // Size
-//       //   r: 'pg', // Rating
-//       //   d: 'mm' // Default
-//       // });
-
-//       const newUser = new User({
-//         name: req.body.name,
-//         email: req.body.email,
-//         //avatar,
-//         password: req.body.password
-//       });
-      
-//       // bcrypt.genSalt(10, (err, salt) => {
-//       //   bcrypt.hash(newUser.password, salt, (err, hash) => {
-//       //     if (err) throw err;
-//       //     newUser.password = hash;
-//       //     newUser
-//       //       .save()
-//       //       .then(user => res.json(user))
-//       //       .catch(err => console.log(err));
-//       //   });
-//       // });
-//     }
-//   });
-// });
-
-
-
-
-
-
 //router.get('/test', (req, res) => res.json({ msg: 'Users Works'}));
 
 
