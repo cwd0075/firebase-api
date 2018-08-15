@@ -3,9 +3,10 @@ const express = require('express');
 const router = express.Router();
 const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const admin = require('firebase-admin');
 admin.initializeApp();
-
+const keys = require('../../config/keys');
 const User = require('../../models/User');
 
 
@@ -81,7 +82,13 @@ router.post('/login', async (req, res) => {
   bcrypt.compare(password, people[0].password).then(isMatch => {
     if (isMatch) {
       // User Matched
-      res.json({msg: 'Success'});
+      const payload = { id: people[0].key, name: people[0].other.name, avatar: people[0].other.avatar }; // Create JWT Payload
+      console.log(payload);
+        // Sign Token
+      jwt.sign(payload, keys.secretOrKey, { expiresIn: 3600 }, (err, token) => {
+          res.json({ success: true, token: 'Bearer ' + token});
+        }
+      );
     } else {
       //errors.password = 'Password incorrect';
       return res.status(400).json({password: 'Password incorrect'});
