@@ -25,8 +25,8 @@ router.post('/register', async (req, res) => {
     query = query.orderByChild('email').equalTo(req.body.email);
     try {
       const snapshot = await query.once('value');
-      const value = snapshot.val();
-      if (value)
+      //const value = snapshot.val();
+      if (snapshot.exists())
         {
           return res.status(400).json('Email already exists');
         }
@@ -60,6 +60,40 @@ router.post('/register', async (req, res) => {
         });
       });
 });      
+
+// @route   GET api/users/login
+// @desc    Login User / Returning JWT Token
+// @access  Public
+router.post('/login', async (req, res) => {
+
+  const email = req.body.email;
+  const password = req.body.password;
+  
+  const results = await admin.database().ref(`/users`).orderByChild('email').equalTo(email).once('value');
+  // Find user by email
+  if(!results.exists()) {
+    return res.status(404).json({email: 'User not found'});
+  }
+  let people = [];
+  results.forEach((result) => {
+        people.push({key: result.key, password: result.val().password, other: result.val()});
+  });
+  bcrypt.compare(password, people[0].password).then(isMatch => {
+    if (isMatch) {
+      // User Matched
+      res.json({msg: 'Success'});
+    } else {
+      //errors.password = 'Password incorrect';
+      return res.status(400).json({password: 'Password incorrect'});
+    }
+  });
+  
+  
+});  
+  
+
+
+
  
 //router.get('/test', (req, res) => res.json({ msg: 'Users Works'}));
 
