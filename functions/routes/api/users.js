@@ -8,6 +8,7 @@ const admin = require('firebase-admin');
 admin.initializeApp();
 const keys = require('../../config/keys');
 const User = require('../../models/User');
+const passport = require('passport');
 
 
 
@@ -62,6 +63,7 @@ router.post('/register', async (req, res) => {
       });
 });      
 
+// https://us-central1-devconnector-cc2ce.cloudfunctions.net/app/api/users/login
 // @route   GET api/users/login
 // @desc    Login User / Returning JWT Token
 // @access  Public
@@ -82,7 +84,7 @@ router.post('/login', async (req, res) => {
   bcrypt.compare(password, people[0].password).then(isMatch => {
     if (isMatch) {
       // User Matched
-      const payload = { id: people[0].key, name: people[0].other.name, avatar: people[0].other.avatar }; // Create JWT Payload
+      const payload = { id: people[0].key, name: people[0].other.name, avatar: people[0].other.avatar, email: people[0].other.email }; // Create JWT Payload
       console.log(payload);
         // Sign Token
       jwt.sign(payload, keys.secretOrKey, { expiresIn: 3600 }, (err, token) => {
@@ -97,8 +99,18 @@ router.post('/login', async (req, res) => {
   
   
 });  
-  
 
+// https://us-central1-devconnector-cc2ce.cloudfunctions.net/app/api/users/current  
+// @route   GET api/users/current
+// @desc    Return current user
+// @access  Private
+router.get(
+  '/current',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    res.json(req.user);
+  }
+);
 
 
  
@@ -139,8 +151,8 @@ router.get('/email', async (req, res) => {
       // snapshot.forEach((childSnapshot) => {
       //   messages.push({key: childSnapshot.key, message: childSnapshot.val().message});
       // });
-      const value = snapshot.val();
-      if (value)
+      //const value = snapshot.val();
+      if (snapshot.exists())
       {
       res.status(200).json({email: 'email found'});
         

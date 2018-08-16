@@ -8,9 +8,14 @@ const express = require('express');
 const cors = require('cors')({origin: true});
 const app = express();
 const bodyParser = require('body-parser');
-
+const passport = require('passport');
 const users = require('./routes/api/users');
 
+
+// Passport middleware
+app.use(passport.initialize());
+// Passport Config
+require('./config/passport')(passport);
 
 app.use(cors);
 
