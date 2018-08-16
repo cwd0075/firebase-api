@@ -10,18 +10,18 @@ const keys = require('../../config/keys');
 const User = require('../../models/User');
 const passport = require('passport');
 
-
+const validateRegisterInput = require('../../validation/register');
 
 // @route   POST api/users/register
 // @desc    Register user
 // @access  Public
 router.post('/register', async (req, res) => {
-  // const { errors, isValid } = validateRegisterInput(req.body);
-
-  // //Check Validation
-  // if (!isValid) {
-  //   return res.status(400).json(errors);
-  // }
+  
+    const { errors, isValid } = validateRegisterInput(req.body);
+    // Check Validation
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
 
     let query = admin.database().ref(`/users`);
     query = query.orderByChild('email').equalTo(req.body.email);
