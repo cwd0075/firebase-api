@@ -11,6 +11,7 @@ const User = require('../../models/User');
 const passport = require('passport');
 
 const validateRegisterInput = require('../../validation/register');
+const validateLoginInput = require('../../validation/login');
 
 // @route   POST api/users/register
 // @desc    Register user
@@ -30,7 +31,8 @@ router.post('/register', async (req, res) => {
       //const value = snapshot.val();
       if (snapshot.exists())
         {
-          return res.status(400).json('Email already exists');
+          errors.email = 'Email already exists';
+          return res.status(400).json(errors);
         }
       } catch(error) {
         console.log('Error getting messages', error.message);
@@ -69,13 +71,21 @@ router.post('/register', async (req, res) => {
 // @access  Public
 router.post('/login', async (req, res) => {
 
+  const { errors, isValid } = validateLoginInput(req.body);
+
+  // Check Validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
   const email = req.body.email;
   const password = req.body.password;
   
   const results = await admin.database().ref(`/users`).orderByChild('email').equalTo(email).once('value');
   // Find user by email
   if(!results.exists()) {
-    return res.status(404).json({email: 'User not found'});
+    errors.email = 'User not found';
+    return res.status(404).json(errors);
   }
   let people = [];
   results.forEach((result) => {
@@ -92,8 +102,8 @@ router.post('/login', async (req, res) => {
         }
       );
     } else {
-      //errors.password = 'Password incorrect';
-      return res.status(400).json({password: 'Password incorrect'});
+      errors.password = 'Password incorrect';
+      return res.status(400).json(errors);
     }
   });
   
