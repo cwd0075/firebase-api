@@ -27,5 +27,68 @@ router.get(
 );
 
 
+// @route   POST api/profile
+// @desc    Create or edit user profile
+// @access  Private
+router.post(
+  '/',
+  passport.authenticate('jwt', { session: false }),
+  async (req, res) => {
+    
+    const errors = {};
+    // Get fields
+    const profileFields = {};
+    const uid = req.user.id;
+    //profileFields.id = uid;
+    if (req.body.handle) profileFields.handle = req.body.handle;
+    if (req.body.company) profileFields.company = req.body.company;
+    if (req.body.website) profileFields.website = req.body.website;
+    if (req.body.location) profileFields.location = req.body.location;
+    if (req.body.bio) profileFields.bio = req.body.bio;
+    if (req.body.status) profileFields.status = req.body.status;
+    if (req.body.githubusername)
+      profileFields.githubusername = req.body.githubusername;
+    // Skills - Spilt into array
+    if (typeof req.body.skills !== 'undefined') {
+      profileFields.skills = req.body.skills.split(',');
+    }
+
+    // Social
+    profileFields.social = {};
+    if (req.body.youtube) profileFields.social.youtube = req.body.youtube;
+    if (req.body.twitter) profileFields.social.twitter = req.body.twitter;
+    if (req.body.facebook) profileFields.social.facebook = req.body.facebook;
+    if (req.body.linkedin) profileFields.social.linkedin = req.body.linkedin;
+    if (req.body.instagram) profileFields.social.instagram = req.body.instagram;
+    profileFields.date = admin.database.ServerValue.TIMESTAMP;
+    
+    const profile =  await admin.database().ref(`/profile`).orderByChild('handle').equalTo(profileFields.handle).once('value')
+    
+        if (profile.exists()) {
+            let people = [];
+              profile.forEach((result) => {
+                    people.push({key: result.key});
+              });
+            const uid2 = people[0].key
+            if (uid2 != uid)
+            {
+                errors.handle = 'That handle already exists';
+                return res.status(400).json(errors);
+            }
+        }
+    
+    const results =  await admin.database().ref(`/profile`).orderByKey().startAt(uid).once('value')
+        if (results.exists()) {
+          
+          admin.database().ref(`/profile/${uid}`).remove().then((temp)=>console.log('uid removed'));
+        }
+    
+    const results2 = await admin.database().ref(`/profile/${uid}`).set(profileFields);
+    res.json("Profile updated."); 
+    
+  }
+);
+
+
 module.exports = router;
 
