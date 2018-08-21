@@ -10,6 +10,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const users = require('./routes/api/users');
+const profile = require('./routes/api/profile');
 
 
 // Passport middleware
@@ -24,6 +25,7 @@ app.use(bodyParser.json());
 
 
 app.use('/api/users', users);
+app.use('/api/profile', profile);
 
 app.get('/hello/:messageId', (req, res) => {
   res.send(`Hello ${req.params.messageId}`);
