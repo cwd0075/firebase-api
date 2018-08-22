@@ -4,6 +4,8 @@ const passport = require('passport');
 const admin = require('firebase-admin');
 //admin.initializeApp();
 
+const validateProfileInput = require('../../validation/profile');
+
 // @route   GET api/profile
 // @desc    Get current users profile
 // @access  Private
@@ -34,12 +36,22 @@ router.post(
   '/',
   passport.authenticate('jwt', { session: false }),
   async (req, res) => {
+    const { errors, isValid } = validateProfileInput(req.body);
+
+    // Check Validation
+    if (!isValid) {
+      // Return any errors with 400 status
+      return res.status(400).json(errors);
+    }
     
-    const errors = {};
     // Get fields
     const profileFields = {};
     const uid = req.user.id;
     //profileFields.id = uid;
+    profileFields.user ={};
+    profileFields.user.id = uid;
+    profileFields.user.name = req.user.name;
+    profileFields.user.avatar = req.user.avatar;
     if (req.body.handle) profileFields.handle = req.body.handle;
     if (req.body.company) profileFields.company = req.body.company;
     if (req.body.website) profileFields.website = req.body.website;
@@ -80,7 +92,8 @@ router.post(
     const results =  await admin.database().ref(`/profile`).orderByKey().startAt(uid).once('value')
         if (results.exists()) {
           
-          admin.database().ref(`/profile/${uid}`).remove().then((temp)=>console.log('uid removed'));
+         const results3 =  await admin.database().ref(`/profile/${uid}`).remove()
+         console.log('uid removed');
         }
     
     const results2 = await admin.database().ref(`/profile/${uid}`).set(profileFields);
