@@ -7,8 +7,14 @@
     	".indexOn": "email",
       "date": {
             ".validate": "newData.val() === now"
-          }
-  }
+       }
+  	},
+    "profile": {
+    	".indexOn": "handle",
+      "date": {
+            ".validate": "newData.val() === now"
+       }
+  	}
   }
   
 }

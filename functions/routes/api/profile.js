@@ -28,6 +28,52 @@ router.get(
   }
 );
 
+// @route   GET api/profile/all
+// @desc    Get all profiles
+// @access  Public
+router.get('/all', async (req, res) => {
+  const errors = {};
+  const profile =  await admin.database().ref(`/profile`).orderByKey().once('value');
+  if (!profile.exists()){
+      errors.noprofile = 'There is no profile for this user';
+      return res.status(404).json(errors);
+  }
+  res.json(profile.val());
+  
+});
+
+
+
+// @route   GET api/profile/handle/:handle
+// @desc    Get profile by handle
+// @access  Public
+
+router.get('/handle/:handle', async (req, res) => {
+  const errors = {};
+  const profile =  await admin.database().ref(`/profile`).orderByChild('handle').equalTo(req.params.handle).once('value');
+  if (!profile.exists()){
+      errors.noprofile = 'There is no profile for this user';
+      return res.status(404).json(errors);
+  }
+  res.json(profile.val());
+
+});
+
+// @route   GET api/profile/user/:user_id
+// @desc    Get profile by user ID
+// @access  Public
+
+router.get('/user/:user_id', async (req, res) => {
+  const errors = {};
+  const profile =  await admin.database().ref(`/profile`).orderByKey().equalTo(req.params.user_id).once('value');
+  if (!profile.exists()){
+      errors.noprofile = 'There is no profile for this user';
+      return res.status(404).json(errors);
+  }
+  res.json(profile.val());
+  
+});
+
 
 // @route   POST api/profile
 // @desc    Create or edit user profile
@@ -74,7 +120,7 @@ router.post(
     if (req.body.instagram) profileFields.social.instagram = req.body.instagram;
     profileFields.date = admin.database.ServerValue.TIMESTAMP;
     
-    const profile =  await admin.database().ref(`/profile`).orderByChild('handle').equalTo(profileFields.handle).once('value')
+    const profile =  await admin.database().ref(`/profile`).orderByChild('handle').equalTo(profileFields.handle).once('value');
     
         if (profile.exists()) {
             let people = [];
@@ -89,10 +135,10 @@ router.post(
             }
         }
     
-    const results =  await admin.database().ref(`/profile`).orderByKey().startAt(uid).once('value')
+    const results =  await admin.database().ref(`/profile`).orderByKey().equalTo(uid).once('value');
         if (results.exists()) {
           
-         const results3 =  await admin.database().ref(`/profile/${uid}`).remove()
+         const results3 =  await admin.database().ref(`/profile/${uid}`).remove();
          console.log('uid removed');
         }
     
