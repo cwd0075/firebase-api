@@ -5,6 +5,8 @@ const admin = require('firebase-admin');
 //admin.initializeApp();
 
 const validateProfileInput = require('../../validation/profile');
+const validateExperienceInput = require('../../validation/experience');
+const validateEducationInput = require('../../validation/education');
 
 // @route   GET api/profile
 // @desc    Get current users profile
@@ -74,6 +76,67 @@ router.get('/user/:user_id', async (req, res) => {
   
 });
 
+// @route   POST api/profile/experience
+// @desc    Add experience to profile
+// @access  Private
+router.post(
+  '/experience',
+  passport.authenticate('jwt', { session: false }),
+  async (req, res) => {
+    const uid = req.user.id;
+    const { errors, isValid } = validateExperienceInput(req.body);
+
+    // Check Validation
+    if (!isValid) {
+      // Return any errors with 400 status
+      return res.status(400).json(errors);
+    }
+    const newExp = {};
+    if (req.body.title) newExp.title = req.body.title;
+    if (req.body.company) newExp.company = req.body.company;
+    if (req.body.location) newExp.location = req.body.location;
+    if (req.body.from) newExp.from = req.body.from;
+    if (req.body.to) newExp.to = req.body.to;
+    newExp.current = 'false';
+    if (req.body.current) newExp.current = req.body.current;
+    if (req.body.description) newExp.description = req.body.description;
+    
+    const results2 = await admin.database().ref(`/profile/${uid}/experience`).push(newExp);
+    res.json("Experience added."); 
+
+  }
+);
+
+// @route   POST api/profile/education
+// @desc    Add education to profile
+// @access  Private
+router.post(
+  '/education',
+  passport.authenticate('jwt', { session: false }),
+  async (req, res) => {
+    const uid = req.user.id;
+    const { errors, isValid } = validateEducationInput(req.body);
+
+    // Check Validation
+    if (!isValid) {
+      // Return any errors with 400 status
+      return res.status(400).json(errors);
+    }
+    const newEdu = {};
+    if (req.body.school) newEdu.school = req.body.school;
+    if (req.body.degree) newEdu.degree = req.body.degree;
+    if (req.body.fieldofstudy) newEdu.fieldofstudy = req.body.fieldofstudy;
+    if (req.body.from) newEdu.from = req.body.from;
+    if (req.body.to) newEdu.to = req.body.to;
+    newEdu.current = 'false';
+    if (req.body.current) newEdu.current = req.body.current;
+    if (req.body.description) newEdu.description = req.body.description;
+    
+    const results2 = await admin.database().ref(`/profile/${uid}/education`).push(newEdu);
+    res.json("Education added");   
+  
+  }
+);
 
 // @route   POST api/profile
 // @desc    Create or edit user profile
