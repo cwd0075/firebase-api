@@ -4,16 +4,10 @@
     ".read": false,
     ".write": false,
     "users": {
-    	".indexOn": "email",
-      "date": {
-            ".validate": "newData.val() === now"
-       }
+    	".indexOn": "email"
   	},
     "profile": {
-    	".indexOn": "handle",
-      "date": {
-            ".validate": "newData.val() === now"
-       }
+    	".indexOn": "handle"
   	}
   }
   

@@ -138,6 +138,54 @@ router.post(
   }
 );
 
+// @route   DELETE api/profile/experience/:exp_id
+// @desc    Delete experience from profile
+// @access  Private
+router.delete(
+  '/experience/:exp_id',
+  passport.authenticate('jwt', { session: false }),
+  async (req, res) => {
+    const uid = req.user.id;
+    const results3 =  await admin.database().ref(`/profile/${uid}/experience/${req.params.exp_id}`).remove();
+    res.json('experience removed');
+  }
+);
+
+// @route   DELETE api/profile/education/:edu_id
+// @desc    Delete education from profile
+// @access  Private
+router.delete(
+  '/education/:edu_id',
+  passport.authenticate('jwt', { session: false }),
+  async (req, res) => {
+    const uid = req.user.id;
+    const results3 =  await admin.database().ref(`/profile/${uid}/education/${req.params.edu_id}`).remove();
+    res.json('education removed');
+  }
+);
+
+// @route   DELETE api/profile
+// @desc    Delete user and profile
+// @access  Private
+// The best implement of async await function with catch error!!!!
+router.delete(
+  '/',
+  passport.authenticate('jwt', { session: false }),
+  async (req, res) => {
+  try{  
+    
+    const uid = req.user.id;
+    const results3 =  await admin.database().ref(`/profile/${uid}`).remove();
+    const results4 =  await admin.database().ref(`/users/${uid}`).remove();
+    res.json({ success: true });
+  }catch(error){
+    console.log('Error deleting profile or user', error.message);
+    res.sendStatus(500); 
+  }
+
+});
+
+
 // @route   POST api/profile
 // @desc    Create or edit user profile
 // @access  Private
