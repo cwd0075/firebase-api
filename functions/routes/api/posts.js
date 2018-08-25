@@ -41,4 +41,74 @@ router.post(
   }
 );
 
+// @route   GET api/posts
+// @desc    Get posts
+// @access  Public
+router.get('/', async (req, res) => {
+  try{
+    const errors = {};
+    const results =  await admin.database().ref(`/posts`).orderByChild('date').once('value');
+    if (!results.exists()){
+        errors.nopostsfound = 'No posts found';
+        return res.status(404).json(errors);
+    }
+    res.json({posts: results.val()});
+  }catch(error){
+    console.log('Error getting all post', error.message);
+    res.sendStatus(500); 
+  }
+ 
+});
+
+// @route   GET api/posts/:id
+// @desc    Get post by id
+// @access  Public
+router.get('/:id', async (req, res) => {
+  try{
+    const errors = {};
+    const results =  await admin.database().ref(`/posts`).orderByKey().equalTo(req.params.id).once('value');
+    if (!results.exists()){
+        errors.nopostsfound = 'No posts found with that ID';
+        return res.status(404).json(errors);
+    }
+    res.json({post: results.val()});
+  }catch(error){
+    console.log('Error getting post with a single ID', error.message);
+    res.sendStatus(500); 
+  }  
+ 
+});
+
+// @route   DELETE api/posts/:id
+// @desc    Delete post
+// @access  Private
+router.delete(
+  '/:id',
+  passport.authenticate('jwt', { session: false }),
+  async (req, res) => {
+      
+      try{
+        const errors = {};
+        const results =  await admin.database().ref(`/posts`).orderByKey().equalTo(req.params.id).once('value');
+        if (!results.exists()){
+            errors.nopostsfound = 'No posts found';
+            return res.status(404).json(errors);
+        }
+        let people = [];
+        results.forEach((result) => {
+              people.push({user: result.val().user});
+        });
+        if (people[0].user!==req.user.id){
+          return res.status(401).json({ notauthorized: 'User not authorized' });
+        }
+        const results4 =  await admin.database().ref(`/posts/${req.params.id}`).remove();
+        res.json({ success: true });
+      }catch(error){
+        console.log('Error deleting post', error.message);
+        res.sendStatus(500); 
+      }  
+      
+  }
+);
+
 module.exports = router;

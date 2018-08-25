@@ -13,13 +13,61 @@ Testing Posts API
     
     + Headers
     
-            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ii1MS2VTcm1oMGd2aV9vRWxxamV1IiwibmFtZSI6ImhlbGxvIiwiYXZhdGFyIjoiLy93d3cuZ3JhdmF0YXIuY29tL2F2YXRhci82Mjc2ZGIzNTU1YWU2Zjc4ZWM5Yzc3NDQ1NzdiNGJkYT9zPTIwMCZyPXBnJmQ9bW0iLCJlbWFpbCI6ImFiY2FiY2FiY0BnbWFpbC5jb20iLCJpYXQiOjE1MzUxODA4MDAsImV4cCI6MTUzNTE4NDQwMH0.CYwyM1ryti-032SW2qcDFbBSTAxxG5OrBBcCiTGt-Ns
+            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ii1MS2VTcm1oMGd2aV9vRWxxamV1IiwibmFtZSI6ImhlbGxvIiwiYXZhdGFyIjoiLy93d3cuZ3JhdmF0YXIuY29tL2F2YXRhci82Mjc2ZGIzNTU1YWU2Zjc4ZWM5Yzc3NDQ1NzdiNGJkYT9zPTIwMCZyPXBnJmQ9bW0iLCJlbWFpbCI6ImFiY2FiY2FiY0BnbWFpbC5jb20iLCJpYXQiOjE1MzUxOTYxMzcsImV4cCI6MTUzNTE5OTczN30.BCP-vIc5ApZewk3tO1JKWkH-JjSwLpb1HSPSd5abVGY
     
     + Body
     
             {
-                "text": "This is a testing post 25Aug 15:35"
+                "text": "This is a testing post 25Aug 15:35",
+                "name": "Peter",
+                "avatar": "//www.gravatar.com/avatar/6276db3555ae6f"
             }
+
++ Response 200 (application/json; charset=utf-8)
+
+### Get All Post [GET]
+
++ Response 200 (application/json; charset=utf-8) 
+
+    + Attributes
+        
+        - posts
+            - *key*
+                - text: "Testing post 123" (string, required)
+                - date: 1234567 (number)
+                - user: "Abcdeff" (string, required)
+                - avatar: "www.avatar.com" 
+                - name: "John"
+                
+## Single Post [/posts/{id}]
+
++ Parameters
+        
+    + id (optional)
+        + Default: -LKlEeXrP3Cj8hbVCuW0
+
+### Get Single Post [GET]
+
++ Response 200 (application/json; charset=utf-8) 
+
+    + Attributes
+        
+        - post
+            - *key*
+                - text: "Testing post 123" (string, required)
+                - date: 1234567 (number)
+                - user: "Abcdeff" (string, required)
+                - avatar: "www.avatar.com" 
+                - name: "John"
+                
+### Delete Single Post [DELETE]
+
++ Request (application/json)
+    
+    + Headers
+    
+            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ii1MS2VTcm1oMGd2aV9vRWxxamV1IiwibmFtZSI6ImhlbGxvIiwiYXZhdGFyIjoiLy93d3cuZ3JhdmF0YXIuY29tL2F2YXRhci82Mjc2ZGIzNTU1YWU2Zjc4ZWM5Yzc3NDQ1NzdiNGJkYT9zPTIwMCZyPXBnJmQ9bW0iLCJlbWFpbCI6ImFiY2FiY2FiY0BnbWFpbC5jb20iLCJpYXQiOjE1MzUyMDI4NzUsImV4cCI6MTUzNTIwNjQ3NX0._brSTucfGU5VRtkUz9YEojyKt8GajONYlPvzRYRl_SM
+
 
 + Response 200 (application/json; charset=utf-8)
 
