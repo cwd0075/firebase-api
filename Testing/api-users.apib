@@ -1,0 +1,59 @@
+FORMAT: 1A
+HOST: https://us-central1-devconnector-cc2ce.cloudfunctions.net/app/api
+
+# Users 
+
+Testing Users API
+
+## User Register [/users/register]
+
+### Create User [POST]
+
++ Request (application/json)
+
+    + Attributes
+        
+        - name: John (string, required)
+        - email: John1234@gmail.com (string, required)
+        - password: John1234 (string, required)
+        - password2: John1234 (string, required)
+
++ Response 200 (application/json; charset=utf-8)
+
+## User Login [/users/login]
+
+### Login User [POST]
+
++ Request (application/json)
+
+    + Attributes
+        
+        - email: john1235@gmail.com (string, required)
+        - password: john1235 (string, required)
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        
+        - success: true (boolean)
+        - token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ (string, required)
+
+## Current User [/users/current]
+
+### Get Current User Details [GET]
+
++ Request (application/json)
+    
+    + Headers
+    
+            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ii1MS2VTcm1oMGd2aV9vRWxxamV1IiwibmFtZSI6ImhlbGxvIiwiYXZhdGFyIjoiLy93d3cuZ3JhdmF0YXIuY29tL2F2YXRhci82Mjc2ZGIzNTU1YWU2Zjc4ZWM5Yzc3NDQ1NzdiNGJkYT9zPTIwMCZyPXBnJmQ9bW0iLCJlbWFpbCI6ImFiY2FiY2FiY0BnbWFpbC5jb20iLCJpYXQiOjE1MzUyMDgzMjAsImV4cCI6MTUzNTIxMTkyMH0.F3zNZEKlvj4lGMlIV6Iz7fhFD125aDbUlDr_JK7dow0
+            
++ Response 200 (application/json; charset=utf-8) 
+
+    + Attributes
+        
+        - id: abcdderer123 (string, required)
+        - email: john1235@gmail.com (string, required)
+        - avatar: www.avatar.com 
+        - name: John
+
