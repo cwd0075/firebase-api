@@ -1,0 +1,150 @@
+FORMAT: 1A
+HOST: https://us-central1-devconnector-cc2ce.cloudfunctions.net/app/api
+
+# Profile 
+
+Testing Profile API
+
+## Profile Resource [/profile]
+
+### Get My Profile [GET]
+
++ Request (application/json)
+    
+    + Headers
+    
+            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ii1MS1JtcnZvVG5CcTN0am45eXVDIiwibmFtZSI6ImFiY2FiYyIsImF2YXRhciI6Ii8vd3d3LmdyYXZhdGFyLmNvbS9hdmF0YXIvMzk4MDUyZDQ0YzJjNTg5NGY3ZThkZjk1YzMxYTMxMDc_cz0yMDAmcj1wZyZkPW1tIiwiZW1haWwiOiJhYmNhYmNAZ21haWwuY29tIiwiaWF0IjoxNTM1MjY0MTQwLCJleHAiOjE1MzUyNjc3NDB9.aW4SiY-mxZgqv8HhQRMKhrfSxZj06zS4XAdh1HuLbPU
+            
++ Response 200 (application/json; charset=utf-8) 
+
+    + Attributes
+        
+        - company: test company 
+        - date: 1534861731577 (number)
+        - handle: abcabc (string, required)
+        - skills: java,linux,mac (array[string], required)
+        - status: available (string, required)
+        - website: www.abc.com
+        - location: USA
+        - bio: xxx
+        - githubusername: john123
+        - social
+            - youtube: www.youtube.com 
+            - twitter: www.twitter.com
+            - facebook: www.facebook.com
+            - linkedin: www.linkedin.com
+            - instagram: www.instagram.com
+
+### Create Profile [POST]
+
++ Request (application/json)
+    
+    + Headers
+    
+            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ii1MS1JtcnZvVG5CcTN0am45eXVDIiwibmFtZSI6ImFiY2FiYyIsImF2YXRhciI6Ii8vd3d3LmdyYXZhdGFyLmNvbS9hdmF0YXIvMzk4MDUyZDQ0YzJjNTg5NGY3ZThkZjk1YzMxYTMxMDc_cz0yMDAmcj1wZyZkPW1tIiwiZW1haWwiOiJhYmNhYmNAZ21haWwuY29tIiwiaWF0IjoxNTM1MjY0MTQwLCJleHAiOjE1MzUyNjc3NDB9.aW4SiY-mxZgqv8HhQRMKhrfSxZj06zS4XAdh1HuLbPU
+    
+    + Attributes
+        
+        - company: test company 
+        - handle: abcabc132 (string, required)
+        - skills: java,linux,mac (string, required)
+        - status: available (string, required)
+        - website: www.abc.com
+        - location: USA
+        - bio: xxx
+        - githubusername: john123
+        - social
+            - youtube: www.youtube.com 
+            - twitter: www.twitter.com
+            - facebook: www.facebook.com
+            - linkedin: www.linkedin.com
+            - instagram: www.instagram.com
+            
++ Response 200 (application/json; charset=utf-8)
+
+## All Profiles [/profile/all]
+
+### Get All Profiles [GET]
+
++ Response 200 (application/json; charset=utf-8) 
+
+    + Attributes
+        
+        - profile
+            - *key*
+                - company: test company 
+                - date: 1534861731577 (number)
+                - handle: abcabc (string, required)
+                - skills: java,linux,mac (array[string], required)
+                - status: available (string, required)
+                - website: www.abc.com
+                - location: USA
+                - bio: xxx
+                - githubusername: john123
+                - social
+                    - youtube: www.youtube.com 
+                    - twitter: www.twitter.com
+                    - facebook: www.facebook.com
+                    - linkedin: www.linkedin.com
+                    - instagram: www.instagram.com
+
+## Profile by Handle [/profile/handle/{handle_id}]
+
++ Parameters
+        
+    + handle_id: abcabc132 
+
+### Get Profile by Handle [GET]
+
++ Response 200 (application/json; charset=utf-8) 
+
+    + Attributes
+        
+        - profile
+            - *key*
+                - company: test company 
+                - date: 1534861731577 (number)
+                - handle: abcabc (string, required)
+                - skills: java,linux,mac (array[string], required)
+                - status: available (string, required)
+                - website: www.abc.com
+                - location: USA
+                - bio: xxx
+                - githubusername: john123
+                - social
+                    - youtube: www.youtube.com 
+                    - twitter: www.twitter.com
+                    - facebook: www.facebook.com
+                    - linkedin: www.linkedin.com
+                    - instagram: www.instagram.com
+
+## Profile by User [/profile/user/{user_id}]
+
++ Parameters
+        
+    + user_id (optional)
+        + Default: -LKRmrvoTnBq3tjn9yuC 
+
+### Get Profile by User ID [GET]
+
++ Response 200 (application/json; charset=utf-8) 
+
+    + Attributes
+        
+        - profile
+            - *key*
+                - company: test company 
+                - date: 1534861731577 (number)
+                - handle: abcabc (string, required)
+                - skills: java,linux,mac (array[string], required)
+                - status: available (string, required)
+                - website: www.abc.com
+                - location: USA
+                - bio: xxx
+                - githubusername: john123
+                - social
+                    - youtube: www.youtube.com 
+                    - twitter: www.twitter.com
+                    - facebook: www.facebook.com
+                    - linkedin: www.linkedin.com
+                    - instagram: www.instagram.com

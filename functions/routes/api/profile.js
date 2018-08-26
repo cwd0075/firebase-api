@@ -40,7 +40,7 @@ router.get('/all', async (req, res) => {
       errors.noprofile = 'There is no profile for this user';
       return res.status(404).json(errors);
   }
-  res.json(profile.val());
+  res.json({profile: profile.val()});
   
 });
 
@@ -57,7 +57,7 @@ router.get('/handle/:handle', async (req, res) => {
       errors.noprofile = 'There is no profile for this user';
       return res.status(404).json(errors);
   }
-  res.json(profile.val());
+  res.json({profile: profile.val()});
 
 });
 
@@ -72,7 +72,7 @@ router.get('/user/:user_id', async (req, res) => {
       errors.noprofile = 'There is no profile for this user';
       return res.status(404).json(errors);
   }
-  res.json(profile.val());
+  res.json({profile: profile.val()});
   
 });
 
