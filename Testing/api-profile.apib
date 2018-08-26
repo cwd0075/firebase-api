@@ -62,6 +62,16 @@ Testing Profile API
             
 + Response 200 (application/json; charset=utf-8)
 
+### Delete Profile [DELETE]
+
++ Request (application/json)
+    
+    + Headers
+    
+            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ii1MS3BUb25XcnYzOEd0QjNSZkNKIiwibmFtZSI6IjEyMzQ1IiwiYXZhdGFyIjoiLy93d3cuZ3JhdmF0YXIuY29tL2F2YXRhci82MzIyOGE0NjZjNGQ3YjRkYTEwNmVlMDY4NTQyYjFkMj9zPTIwMCZyPXBnJmQ9bW0iLCJlbWFpbCI6IjEyMzQ1Y0BnbWFpbC5jb20iLCJpYXQiOjE1MzUyNzQ4MDIsImV4cCI6MTUzNTI3ODQwMn0.ZGkPyFdv_A3YdxQYpQIAttxukQLedgBR47D814TByUA
+    
++ Response 200 (application/json; charset=utf-8)
+
 ## All Profiles [/profile/all]
 
 ### Get All Profiles [GET]
@@ -148,3 +158,89 @@ Testing Profile API
                     - facebook: www.facebook.com
                     - linkedin: www.linkedin.com
                     - instagram: www.instagram.com
+
+# Group Experience
+
+## Experience Profile [/profile/experience]
+
+### Create Experience Profile [POST]
+
++ Request (application/json)
+    
+    + Headers
+    
+            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ii1MS1JtcnZvVG5CcTN0am45eXVDIiwibmFtZSI6ImFiY2FiYyIsImF2YXRhciI6Ii8vd3d3LmdyYXZhdGFyLmNvbS9hdmF0YXIvMzk4MDUyZDQ0YzJjNTg5NGY3ZThkZjk1YzMxYTMxMDc_cz0yMDAmcj1wZyZkPW1tIiwiZW1haWwiOiJhYmNhYmNAZ21haWwuY29tIiwiaWF0IjoxNTM1Mjc1NzM0LCJleHAiOjE1MzUyNzkzMzR9._-rTTZclO_YHFoOm7Q2NLTs9W0a7uev1eHZnXEyBz1U
+    
+    + Attributes
+        
+        - company: Company ABC (string, required)
+        - title: Manager (string, required)
+        - from: 23/4/2015 (string, required)
+        - to: 23/4/2017 
+        - location: USA
+        - current: false
+        - description: Project for Nasa
+        
+            
++ Response 200 (application/json; charset=utf-8)
+
+## Single Experience [/profile/experience/{id}]
+
++ Parameters
+        
+    + id (optional)
+        + Default: -LKpS1Vk7O8YC9IDsiGg
+
+### Delete Single Experience [DELETE]
+
++ Request (application/json)
+    
+    + Headers
+    
+            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ii1MS1JtcnZvVG5CcTN0am45eXVDIiwibmFtZSI6ImFiY2FiYyIsImF2YXRhciI6Ii8vd3d3LmdyYXZhdGFyLmNvbS9hdmF0YXIvMzk4MDUyZDQ0YzJjNTg5NGY3ZThkZjk1YzMxYTMxMDc_cz0yMDAmcj1wZyZkPW1tIiwiZW1haWwiOiJhYmNhYmNAZ21haWwuY29tIiwiaWF0IjoxNTM1Mjc1NzM0LCJleHAiOjE1MzUyNzkzMzR9._-rTTZclO_YHFoOm7Q2NLTs9W0a7uev1eHZnXEyBz1U
+    
++ Response 200 (application/json; charset=utf-8)
+
+# Group Education
+
+## Education Profile [/profile/education]
+
+### Create Education Profile [POST]
+
++ Request (application/json)
+    
+    + Headers
+    
+            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ii1MS1JtcnZvVG5CcTN0am45eXVDIiwibmFtZSI6ImFiY2FiYyIsImF2YXRhciI6Ii8vd3d3LmdyYXZhdGFyLmNvbS9hdmF0YXIvMzk4MDUyZDQ0YzJjNTg5NGY3ZThkZjk1YzMxYTMxMDc_cz0yMDAmcj1wZyZkPW1tIiwiZW1haWwiOiJhYmNhYmNAZ21haWwuY29tIiwiaWF0IjoxNTM1Mjc1NzM0LCJleHAiOjE1MzUyNzkzMzR9._-rTTZclO_YHFoOm7Q2NLTs9W0a7uev1eHZnXEyBz1U
+    
+    + Attributes
+        
+        - school: NY Metro University (string, required)
+        - degree: Phd (string, required)
+        - fieldofstudy: Maths (string, required)
+        - from: 23/5/2016 (string, required)
+        - to: 23/4/2017 
+        - current: false
+        - description: Linux Final Year Project
+        
+            
++ Response 200 (application/json; charset=utf-8)
+
+## Single Education [/profile/education/{id}]
+
++ Parameters
+        
+    + id (optional)
+        + Default: -LKpaQF6UOER96sFqX3r
+
+### Delete Single Education [DELETE]
+
++ Request (application/json)
+    
+    + Headers
+    
+            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ii1MS1JtcnZvVG5CcTN0am45eXVDIiwibmFtZSI6ImFiY2FiYyIsImF2YXRhciI6Ii8vd3d3LmdyYXZhdGFyLmNvbS9hdmF0YXIvMzk4MDUyZDQ0YzJjNTg5NGY3ZThkZjk1YzMxYTMxMDc_cz0yMDAmcj1wZyZkPW1tIiwiZW1haWwiOiJhYmNhYmNAZ21haWwuY29tIiwiaWF0IjoxNTM1Mjc1NzM0LCJleHAiOjE1MzUyNzkzMzR9._-rTTZclO_YHFoOm7Q2NLTs9W0a7uev1eHZnXEyBz1U
+    
++ Response 200 (application/json; charset=utf-8)
+
+
