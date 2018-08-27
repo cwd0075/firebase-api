@@ -111,4 +111,63 @@ router.delete(
   }
 );
 
+// @route   POST api/posts/like/:id
+// @desc    Like post
+// @access  Private
+router.post(
+  '/like/:id',
+  passport.authenticate('jwt', { session: false }),
+  async (req, res) => {
+    try{
+      const errors = {};
+      const results =  await admin.database().ref(`/posts`).orderByKey().equalTo(req.params.id).once('value');
+      if (!results.exists()){
+          errors.nopostsfound = 'No posts found with that ID';
+          return res.status(404).json(errors);
+      }
+      const results2 =  await admin.database().ref(`/posts/${req.params.id}/like/${req.user.id}`).once('value');
+       if (results2.exists()){
+          errors.alreadyliked = 'User already liked this post';
+          return res.status(400).json(errors);
+      }
+      const results3 =  await admin.database().ref(`/posts/${req.params.id}/like/${req.user.id}`).set("true");
+      res.json({success: true});
+    }catch(error){
+      console.log('Error while like post', error.message);
+      res.sendStatus(500); 
+    }    
+
+  }
+);
+
+// @route   POST api/posts/unlike/:id
+// @desc    Unlike post
+// @access  Private
+router.post(
+  '/unlike/:id',
+  passport.authenticate('jwt', { session: false }),
+  async (req, res) => {
+    try{
+      const errors = {};
+      const results =  await admin.database().ref(`/posts`).orderByKey().equalTo(req.params.id).once('value');
+      if (!results.exists()){
+          errors.nopostsfound = 'No posts found with that ID';
+          return res.status(404).json(errors);
+      }
+      const results2 =  await admin.database().ref(`/posts/${req.params.id}/like/${req.user.id}`).once('value');
+       if (!results2.exists()){
+          errors.notliked = 'You have not yet liked this post';
+          return res.status(400).json(errors);
+      }
+      const results3 =  await admin.database().ref(`/posts/${req.params.id}/like/${req.user.id}`).remove();
+      res.json({success: true});
+    }catch(error){
+      console.log('Error while unlike post', error.message);
+      res.sendStatus(500); 
+    }    
+  }
+);
+
+
+
 module.exports = router;
