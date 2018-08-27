@@ -13,7 +13,7 @@ Testing Profile API
     
     + Headers
     
-            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ii1MS1JtcnZvVG5CcTN0am45eXVDIiwibmFtZSI6ImFiY2FiYyIsImF2YXRhciI6Ii8vd3d3LmdyYXZhdGFyLmNvbS9hdmF0YXIvMzk4MDUyZDQ0YzJjNTg5NGY3ZThkZjk1YzMxYTMxMDc_cz0yMDAmcj1wZyZkPW1tIiwiZW1haWwiOiJhYmNhYmNAZ21haWwuY29tIiwiaWF0IjoxNTM1MjY0MTQwLCJleHAiOjE1MzUyNjc3NDB9.aW4SiY-mxZgqv8HhQRMKhrfSxZj06zS4XAdh1HuLbPU
+            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ii1MS1JtcnZvVG5CcTN0am45eXVDIiwibmFtZSI6ImFiY2FiYyIsImF2YXRhciI6Ii8vd3d3LmdyYXZhdGFyLmNvbS9hdmF0YXIvMzk4MDUyZDQ0YzJjNTg5NGY3ZThkZjk1YzMxYTMxMDc_cz0yMDAmcj1wZyZkPW1tIiwiZW1haWwiOiJhYmNhYmNAZ21haWwuY29tIiwiaWF0IjoxNTM1MzU2MjY5LCJleHAiOjE1MzUzNTk4Njl9.p7yjPPSQ9POr-5QL21roUjJh70mhKNYzIsdv66U6C7A
             
 + Response 200 (application/json; charset=utf-8) 
 
@@ -53,6 +53,12 @@ Testing Profile API
         - location: USA
         - bio: xxx
         - githubusername: john123
+        - experience
+            - *key2*
+                - Include ExperienceBase
+        - education
+            - *key3*
+                - Include EducationBase
         - social
             - youtube: www.youtube.com 
             - twitter: www.twitter.com
@@ -81,7 +87,7 @@ Testing Profile API
     + Attributes
         
         - profile
-            - *key*
+            - *key1*
                 - company: test company 
                 - date: 1534861731577 (number)
                 - handle: abcabc (string, required)
@@ -91,6 +97,12 @@ Testing Profile API
                 - location: USA
                 - bio: xxx
                 - githubusername: john123
+                - experience
+                    - *key2*
+                        - Include ExperienceBase
+                - education
+                    - *key3*
+                        - Include EducationBase
                 - social
                     - youtube: www.youtube.com 
                     - twitter: www.twitter.com
@@ -121,6 +133,12 @@ Testing Profile API
                 - location: USA
                 - bio: xxx
                 - githubusername: john123
+                - experience
+                    - *key2*
+                        - Include ExperienceBase
+                - education
+                    - *key3*
+                        - Include EducationBase
                 - social
                     - youtube: www.youtube.com 
                     - twitter: www.twitter.com
@@ -152,6 +170,12 @@ Testing Profile API
                 - location: USA
                 - bio: xxx
                 - githubusername: john123
+                - experience
+                    - *key2*
+                        - Include ExperienceBase
+                - education
+                    - *key3*
+                        - Include EducationBase
                 - social
                     - youtube: www.youtube.com 
                     - twitter: www.twitter.com
@@ -169,19 +193,10 @@ Testing Profile API
     
     + Headers
     
-            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ii1MS1JtcnZvVG5CcTN0am45eXVDIiwibmFtZSI6ImFiY2FiYyIsImF2YXRhciI6Ii8vd3d3LmdyYXZhdGFyLmNvbS9hdmF0YXIvMzk4MDUyZDQ0YzJjNTg5NGY3ZThkZjk1YzMxYTMxMDc_cz0yMDAmcj1wZyZkPW1tIiwiZW1haWwiOiJhYmNhYmNAZ21haWwuY29tIiwiaWF0IjoxNTM1Mjc1NzM0LCJleHAiOjE1MzUyNzkzMzR9._-rTTZclO_YHFoOm7Q2NLTs9W0a7uev1eHZnXEyBz1U
+            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ii1MS1JtcnZvVG5CcTN0am45eXVDIiwibmFtZSI6ImFiY2FiYyIsImF2YXRhciI6Ii8vd3d3LmdyYXZhdGFyLmNvbS9hdmF0YXIvMzk4MDUyZDQ0YzJjNTg5NGY3ZThkZjk1YzMxYTMxMDc_cz0yMDAmcj1wZyZkPW1tIiwiZW1haWwiOiJhYmNhYmNAZ21haWwuY29tIiwiaWF0IjoxNTM1MzU2MjY5LCJleHAiOjE1MzUzNTk4Njl9.p7yjPPSQ9POr-5QL21roUjJh70mhKNYzIsdv66U6C7A
     
-    + Attributes
-        
-        - company: Company ABC (string, required)
-        - title: Manager (string, required)
-        - from: 23/4/2015 (string, required)
-        - to: 23/4/2017 
-        - location: USA
-        - current: false
-        - description: Project for Nasa
-        
-            
+    + Attributes (ExperienceBase)
+
 + Response 200 (application/json; charset=utf-8)
 
 ## Single Experience [/profile/experience/{id}]
@@ -211,19 +226,10 @@ Testing Profile API
     
     + Headers
     
-            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ii1MS1JtcnZvVG5CcTN0am45eXVDIiwibmFtZSI6ImFiY2FiYyIsImF2YXRhciI6Ii8vd3d3LmdyYXZhdGFyLmNvbS9hdmF0YXIvMzk4MDUyZDQ0YzJjNTg5NGY3ZThkZjk1YzMxYTMxMDc_cz0yMDAmcj1wZyZkPW1tIiwiZW1haWwiOiJhYmNhYmNAZ21haWwuY29tIiwiaWF0IjoxNTM1Mjc1NzM0LCJleHAiOjE1MzUyNzkzMzR9._-rTTZclO_YHFoOm7Q2NLTs9W0a7uev1eHZnXEyBz1U
+            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ii1MS1JtcnZvVG5CcTN0am45eXVDIiwibmFtZSI6ImFiY2FiYyIsImF2YXRhciI6Ii8vd3d3LmdyYXZhdGFyLmNvbS9hdmF0YXIvMzk4MDUyZDQ0YzJjNTg5NGY3ZThkZjk1YzMxYTMxMDc_cz0yMDAmcj1wZyZkPW1tIiwiZW1haWwiOiJhYmNhYmNAZ21haWwuY29tIiwiaWF0IjoxNTM1MzU2MjY5LCJleHAiOjE1MzUzNTk4Njl9.p7yjPPSQ9POr-5QL21roUjJh70mhKNYzIsdv66U6C7A
     
-    + Attributes
-        
-        - school: NY Metro University (string, required)
-        - degree: Phd (string, required)
-        - fieldofstudy: Maths (string, required)
-        - from: 23/5/2016 (string, required)
-        - to: 23/4/2017 
-        - current: false
-        - description: Linux Final Year Project
-        
-            
+    + Attributes (EducationBase)
+ 
 + Response 200 (application/json; charset=utf-8)
 
 ## Single Education [/profile/education/{id}]
@@ -242,5 +248,25 @@ Testing Profile API
             Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ii1MS1JtcnZvVG5CcTN0am45eXVDIiwibmFtZSI6ImFiY2FiYyIsImF2YXRhciI6Ii8vd3d3LmdyYXZhdGFyLmNvbS9hdmF0YXIvMzk4MDUyZDQ0YzJjNTg5NGY3ZThkZjk1YzMxYTMxMDc_cz0yMDAmcj1wZyZkPW1tIiwiZW1haWwiOiJhYmNhYmNAZ21haWwuY29tIiwiaWF0IjoxNTM1Mjc1NzM0LCJleHAiOjE1MzUyNzkzMzR9._-rTTZclO_YHFoOm7Q2NLTs9W0a7uev1eHZnXEyBz1U
     
 + Response 200 (application/json; charset=utf-8)
+
+# Data Structures
+
+## ExperienceBase (object)
+- company: Company ABC (string, required)
+- title: Manager (string, required)
+- from: 23/4/2015 (string, required)
+- to: 23/4/2017 
+- location: USA
+- current: false
+- description: Project for Nasa
+
+## EducationBase (object)
+- school: NY Metro University (string, required)
+- degree: Phd (string, required)
+- fieldofstudy: Maths (string, required)
+- from: 23/5/2016 (string, required)
+- to: 23/4/2017 
+- current: false
+- description: Linux Final Year Project
 
 
