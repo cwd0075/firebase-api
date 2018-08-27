@@ -38,13 +38,16 @@ Testing Posts API
                 - user: Abcdeff (string, required)
                 - avatar: www.avatar.com 
                 - name: John
+                - like 
+                    - *userid*: true
+                    
                 
 ## Single Post [/posts/{id}]
 
 + Parameters
         
     + id (optional)
-        + Default: -LKlEeXrP3Cj8hbVCuW0
+        + Default: -LKuYfg-kOwvp75Wekj7
 
 ### Get Single Post [GET]
 
@@ -59,6 +62,8 @@ Testing Posts API
                 - user: Abcdeff (string, required)
                 - avatar: www.avatar.com 
                 - name: John
+                - like 
+                    - *userid*: true
                 
 ### Delete Single Post [DELETE]
 
@@ -71,3 +76,36 @@ Testing Posts API
 
 + Response 200 (application/json; charset=utf-8)
 
+## Like [/posts/like/{postid}]
+
++ Parameters
+        
+    + postid (optional)
+        + Default: -LKuYfg-kOwvp75Wekj7
+
+### Like Post [POST]
+
++ Request (application/json)
+    
+    + Headers
+    
+            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ii1MS1JtcnZvVG5CcTN0am45eXVDIiwibmFtZSI6ImFiY2FiYyIsImF2YXRhciI6Ii8vd3d3LmdyYXZhdGFyLmNvbS9hdmF0YXIvMzk4MDUyZDQ0YzJjNTg5NGY3ZThkZjk1YzMxYTMxMDc_cz0yMDAmcj1wZyZkPW1tIiwiZW1haWwiOiJhYmNhYmNAZ21haWwuY29tIiwiaWF0IjoxNTM1MzYzODY5LCJleHAiOjE1MzUzNjc0Njl9.srv9rlsFHl-HO7lke8MpWFO7uZRm6RqCcv8cYgSwDGc 
+    
++ Response 200 (application/json; charset=utf-8) 
+
+## Unlike [/posts/unlike/{postid}]
+
++ Parameters
+        
+    + postid (optional)
+        + Default: -LKuYfg-kOwvp75Wekj7
+
+### Unlike Post [POST]
+
++ Request (application/json)
+    
+    + Headers
+    
+            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ii1MS1JtcnZvVG5CcTN0am45eXVDIiwibmFtZSI6ImFiY2FiYyIsImF2YXRhciI6Ii8vd3d3LmdyYXZhdGFyLmNvbS9hdmF0YXIvMzk4MDUyZDQ0YzJjNTg5NGY3ZThkZjk1YzMxYTMxMDc_cz0yMDAmcj1wZyZkPW1tIiwiZW1haWwiOiJhYmNhYmNAZ21haWwuY29tIiwiaWF0IjoxNTM1MzYzODY5LCJleHAiOjE1MzUzNjc0Njl9.srv9rlsFHl-HO7lke8MpWFO7uZRm6RqCcv8cYgSwDGc
+    
++ Response 200 (application/json; charset=utf-8) 
