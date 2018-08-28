@@ -168,6 +168,73 @@ router.post(
   }
 );
 
+// @route   POST api/posts/comment/:id
+// @desc    Add comment to post
+// @access  Private
+router.post(
+  '/comment/:id',
+  passport.authenticate('jwt', { session: false }),
+  async (req, res) => {
+    const { errors, isValid } = validatePostInput(req.body);
+
+    // Check Validation
+    if (!isValid) {
+      // If any errors, send 400 with errors object
+      return res.status(400).json(errors);
+    }
+    
+    try{
+      const errors = {};
+      const results =  await admin.database().ref(`/posts`).orderByKey().equalTo(req.params.id).once('value');
+      if (!results.exists()){
+          errors.nopostsfound = 'No posts found with that ID';
+          return res.status(404).json(errors);
+      }
+      const newComment = {};
+      if (req.body.text) newComment.text = req.body.text;
+      if (req.body.name) newComment.name = req.body.name;
+      if (req.body.avatar) newComment.avatar = req.body.avatar;
+      newComment.user = req.user.id;
+      newComment.date = admin.database.ServerValue.TIMESTAMP;
+    
+      const results3 =  await admin.database().ref(`/posts/${req.params.id}/comments`).push(newComment);
+      res.json({success: true});
+    }catch(error){
+      console.log('Error while adding comment', error.message);
+      res.sendStatus(500); 
+    }    
+  }
+);
+
+// @route   DELETE api/posts/comment/:id/:comment_id
+// @desc    Remove comment from post
+// @access  Private
+router.delete(
+  '/comment/:id/:comment_id',
+  passport.authenticate('jwt', { session: false }),
+  async (req, res) => {
+    try{
+      const errors = {};
+      const results =  await admin.database().ref(`/posts`).orderByKey().equalTo(req.params.id).once('value');
+      if (!results.exists()){
+          errors.nopostsfound = 'No posts found with that ID';
+          return res.status(404).json(errors);
+      }
+      const results2 =  await admin.database().ref(`/posts/${req.params.id}/comments/${req.params.comment_id}`).once('value');
+       if (!results2.exists()){
+          errors.commentnotexists = 'Comment does not exist';
+          return res.status(404).json(errors);
+      }
+    
+      const results3 =  await admin.database().ref(`/posts/${req.params.id}/comments/${req.params.comment_id}`).remove();
+      res.json({success: true});
+    }catch(error){
+      console.log('Error while deleting comment', error.message);
+      res.sendStatus(500); 
+    }    
+    
+  }
+);
 
 
 module.exports = router;
